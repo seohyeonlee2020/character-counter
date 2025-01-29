@@ -12,17 +12,13 @@ let maxWords = 0
 let numChars = 0
 let numWords = 0
 
-charCount.textContent = `0 Characters`
-wordCount.textContent = `0 Words`
-
+charCount.textContent = `0 자`
 
 const counter = () => {
 	numChars = textInput.value.length
 	numWords = textInput.value.trim().split(/\s+/).filter(word => word.length > 0).length;
 
-	charCount.textContent = `${numChars} Characters`
-	wordCount.textContent = `${numWords} Words`
-
+	charCount.textContent = `${numChars} 자`
 }
 
 const setLimits = () => {
@@ -31,15 +27,10 @@ if (charLimit.value){
 	numChars = textInput.value.length
 	maxChars = parseInt(charLimit.value)
 	textInput.setAttribute("maxlength", maxChars)
-	charCount.textContent = numChars == 1 ? `${numChars}/${maxChars} Characters` : `${numChars}/${maxChars} Characters`
+	charCount.textContent = numChars == 1 ? `${numChars}/${maxChars}글자` : `${numChars}/${maxChars}글자`
 	checkMax(numChars, maxChars, charCount)
 }
 
-if (wordLimit.value){
-	numWords = textInput.value.trim().split(/\s+/).filter(word => word.length > 0).length;
-	maxWords = parseInt(wordLimit.value)
-	wordCount.textContent = numWords == 1 ? `${numWords}/${maxWords} Word` : `${numWords}/${maxWords} Words`
-}
 }
 
 const checkMax = (currentCount, maxCount, displayCount) => {
@@ -56,8 +47,6 @@ const checkMax = (currentCount, maxCount, displayCount) => {
 
 charLimit.addEventListener("input", setLimits)
 /*charLimit.addEventListener("change", () => {checkMax(numChars, maxChars, charCount)}) */
-
-wordLimit.addEventListener("input", setLimits)
 /*wordLimit.addEventListener("change", () => {checkMax(numWords, maxWords, wordCount)})*/
 
 textInput.addEventListener("input", counter)
