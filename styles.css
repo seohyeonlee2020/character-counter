@@ -2,15 +2,36 @@
 body{
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
+	margin: 20px;
 }
 
-.container{
-	margin: 0 10px;
+#limit-area {
+	max-width: 50%;
+}
+
+p {
+	margin:5px
+}
+
+.vertical-container{
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 }
+
+.horizontal-container{
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+
+#text-input{
+	height: 30vh;
+	width: auto;
+}
 .red{
 	color: red;
   }
+
+
 

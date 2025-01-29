@@ -10,21 +10,28 @@
 </head>
 
 <body>
-    <h1>Real Time Character Counter</h1>
-	<div class="container">
-		<div>
-			<label id="char-limit-label" for="char-limit">Enter word/character limit</label>
-			<input type="number" id="char-limit"></input>
+    <h1>Word Count</h1>
+	<div class="vertical-container">
+		<div width="100px" id="limit-area" class="vertical-container">
+			<div class="horizontal-container">
+				<input type="number" id="char-limit"></input>
+			<label class="limit-label" for="limit">characters allowed</label>
+			</div>
 
-			<select id="limit-dropdown">
-				<option id="char-option">characters</option>
-				<option id="word-option">words</option>
-			</select>
+			<div class="horizontal-container">
+				<input type="number" id="word-limit"></input>
+			<label class="limit-label" for="limit">words allowed</label>
+			</div>
 		</div>
 		<div>
-			<textarea id="text-input"></textarea>
-	    	<p id="char-count" >Characters</p>
-			<p id="word-count" >Words</p>
+			<div class="vertical-container">
+				<label for="text">Enter text:</label>
+				<textarea id="text-input"></textarea>
+				<div class="vertical-container">
+					<p id="char-count" >0 Characters</p>
+					<p id="word-count" >0 Words</p>
+				</div>
+			</div>
 		</div>
 	</div>
 
