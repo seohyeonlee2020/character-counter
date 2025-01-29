@@ -11,8 +11,22 @@
 
 <body>
     <h1>Real Time Character Counter</h1>
-    <textarea maxlength=50 id="text-input"></textarea>
-    <p id="char-count" >Character Count: 0/50</p>
+	<div class="container">
+		<div>
+			<label id="char-limit-label" for="char-limit">Enter word/character limit</label>
+			<input type="number" id="char-limit"></input>
+
+			<select id="limit-dropdown">
+				<option id="char-option">characters</option>
+				<option id="word-option">words</option>
+			</select>
+		</div>
+		<div>
+			<textarea id="text-input"></textarea>
+	    	<p id="char-count" >Characters</p>
+			<p id="word-count" >Words</p>
+		</div>
+	</div>
 
     <script src="script.js"></script>
 </body>

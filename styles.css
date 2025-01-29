@@ -1,5 +1,16 @@
 
+body{
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
 
+.container{
+	margin: 0 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
 .red{
 	color: red;
   }
+
