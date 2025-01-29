@@ -4,6 +4,33 @@ body{
 	font-weight: bold;
 	margin: 20px;
 }
+.active-tab{
+	display: block;
+	visibility: visible;
+}
+
+.default-tab{
+	display: block;
+	visibility: visible;
+}
+
+.tab button {
+	background-color: inherit;
+	font-family: inherit;
+	font-weight: inherit;
+	font-size: inherit;
+	float: right;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+  }
+
+.tab-content {
+	display: none;
+	padding: 6px 12px;
+  }
 
 #limit-area {
 	max-width: 50%;

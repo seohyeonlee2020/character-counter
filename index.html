@@ -10,11 +10,19 @@
 </head>
 
 <body>
+	<!-- Tab links -->
+	<div class="tab" id="navbar">
+	  <button id="default" class="tablinks" onclick="openTab(event, 'en')" >en</button>
+	  <button class="tablinks" onclick="openTab(event, 'ko')">ko</button>
+	</div>
+
+	<!-- Tab Content-->
+	<div class="default-tab tab-content" id="en">
     <h1>Word Count</h1>
 	<div class="vertical-container">
 		<div width="100px" id="limit-area" class="vertical-container">
 			<div class="horizontal-container">
-				<input type="number" id="char-limit"></input>
+				<input type="number" class="char-limit"></input>
 			<label class="limit-label" for="limit">characters allowed</label>
 			</div>
 
@@ -26,12 +34,37 @@
 		<div>
 			<div class="vertical-container">
 				<label for="text">Enter text:</label>
-				<textarea id="text-input"></textarea>
+				<textarea class="text-input en"></textarea>
 				<div class="vertical-container">
-					<p id="char-count" >0 Characters</p>
-					<p id="word-count" >0 Words</p>
+					<p class="char-count-space en" >0 Characters including space</p>
+					<p class="char-count-no-space en" >0 Characters except space</p>
+					<p class="word-count en" >0 Words</p>
 				</div>
 			</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="tab-content" id="ko">
+		<h1>글자수 세기</h1>
+	<div class="vertical-container">
+		<div width="100px" id="limit-area" class="vertical-container">
+			<div class="horizontal-container">
+				<p class="limit-label" for="limit">글자수 제한</p>
+				<input type="number" class="char-limit"></input>
+				<p>자</p>
+
+			</div>
+		</div>
+		<div>
+			<div class="vertical-container">
+				<textarea class="text-input ko" placeholder="내용을 입력해주세요."></textarea>
+				<div class="vertical-container">
+					<p class="char-count-space ko" >0 자 (공백 포함)</p>
+					<p class="char-count-no-space ko" >0 자 (공백 제외)</p>
+				</div>
+			</div>
+		</div>
 		</div>
 	</div>
 
