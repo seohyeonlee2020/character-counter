@@ -10,26 +10,28 @@
 </head>
 
 <body>
-    <h1>Word Count</h1>
+    <h1>글자수 세기</h1>
 	<div class="vertical-container">
 		<div width="100px" id="limit-area" class="vertical-container">
 			<div class="horizontal-container">
+				<label class="limit-label" for="limit">최대 글자수</label>
 				<input type="number" id="char-limit"></input>
-			<label class="limit-label" for="limit">characters allowed</label>
+				<p>자</p>
+
 			</div>
 
 			<div class="horizontal-container">
-				<input type="number" id="word-limit"></input>
-			<label class="limit-label" for="limit">words allowed</label>
+				<input type="number" id="word-limit">최대 단어수</input>
+				<label class="limit-label" for="limit">words allowed</label>
+				<p>단어</p>
 			</div>
 		</div>
 		<div>
 			<div class="vertical-container">
-				<label for="text">Enter text:</label>
-				<textarea id="text-input"></textarea>
+				<textarea id="text-input" placeholder="내용을 입력해주세요."></textarea>
 				<div class="vertical-container">
-					<p id="char-count" >0 Characters</p>
-					<p id="word-count" >0 Words</p>
+					<p id="char-count" >0글자</p>
+					<p id="word-count" >0단어</p>
 				</div>
 			</div>
 		</div>
