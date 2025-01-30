@@ -27,85 +27,197 @@ function openTab(event, langCode) {
 	let activeTab = document.querySelector('.tab-content[style="display: block;"]');
 	console.log('active tab', activeTab)
 	activeTab.classList.add("active-tab")
-	let textInput = activeTab.querySelector(".text-input")
-	let charLimit = activeTab.querySelector(".char-limit")
 
-	textInput.addEventListener("input", () => {counter(activeTab, textInput)})
+	const textInput = activeTab.querySelector(".text-input")
+	textInput.addEventListener("input", () => main(activeTab, textInput))
+
+	const charLimit = activeTab.querySelector(".char-limit")
+	charLimit.addEventListener("input", () => setCharLimits(activeTab, textInput, charLimit) )
+	charLimit.addEventListener("emptied", () => removeCharLimits(activeTab, textInput))
+
+	if (activeTab.id == 'en'){
+		const wordLimit = document.getElementById("word-limit")
+		wordLimit.addEventListener("input", () => setWordLimits(activeTab, textInput, wordLimit))
+		//console.log("line after adding elistener to wordlimit")
+	}
 
   }
 
+const main = (activeTab, textInput) => {
+	//count chars and display counts
+	const {numCharsSpace, numCharsNoSpace} = countChars(textInput)
+	//console.log("numCharsSpace being passed into displayCharCounts", numCharsSpace, typeof numCharsSpace)
+	//console.log("numCharsNoSpace being passed into displayCharCounts", numCharsSpace, typeof numCharsSpace)
+	displayCharCounts(activeTab, numCharsSpace, numCharsNoSpace)
+
+	//count words and display counts if applicable
+	if (activeTab.id == 'en'){
+		const numWords = countWords(textInput)
+		displayWordCounts(activeTab, numWords)
+	}
+
+	//const charLimit = activeTab.querySelector(".char-limit")
+
+	if (activeTab.id == 'en'){
+		const wordLimit = document.getElementById("word-limit")
+		const wordCount = activeTab.querySelector("word-count")
+		wordLimit.addEventListener("input", () => setWordLimits(activeTab, wordLimit, numWords, wordCount))
+		wordLimit.addEventListener("emptied", () => removeWordLimits(activeTab, textInput))
+
+		/*if (textInput.value && wordLimit.value){
+			checkMax(numWords, parseInt(wordLimit.value), wordConut)
+		}*/
+	}
+}
+
+const countChars = (textInput) => {
+	console.log("counter is called")
+	//console.log("activetab", activeTab.id, "text", textInput.value, textInput.value.length)
+
+	const numCharsSpace = textInput && textInput.value ? textInput.value.length : 0
+	const numCharsNoSpace = textInput && textInput.value ? textInput.value.split("").filter((char) => char != " ").length : 0
+	//const charCountSpace = activeTab.querySelector(".char-count-space")
+	//const charCountNoSpace = activeTab.querySelector(".char-count-no-space")
+	//display counts
+	//displayCounts(activeTab, textInput, numCharsSpace, numCharsNoSpace)
+
+	//set limits (event listeners to charlimit and wordlimit)
+	//check if text is longer than given limits
+	console.log('chars with space count from countchars', numCharsSpace)
+
+	return {numCharsSpace, numCharsNoSpace}
+}
+
+const countWords = (textInput) => {
+	let numWords = textInput && textInput.value ? textInput.value.trim().split(/\s+/).filter(word => word.length > 0).length : 0
+	return numWords
+}
+
+const displayCharCounts = (activeTab, numCharsSpace, numCharsNoSpace) => {
+	console.log("displaycounts is called")
+	const charCountSpace = activeTab.querySelector(".char-count-space")
+	const charCountNoSpace = activeTab.querySelector(".char-count-no-space")
+	console.log('numCharsSpace being displayed', numCharsSpace, typeof numCharsSpace)
+	console.log('numCharsNoSpace being displayed', numCharsNoSpace, typeof numCharsNoSpace)
+
+	charCountSpace.textContent = numCharsSpace
+	charCountNoSpace.textContent = numCharsNoSpace
+
+}
+
+const displayWordCounts = (activeTab, numWords) => {
+	const wordCount = activeTab.querySelector(".word-count")
+	wordCount.textContent = numWords
+}
+
+const setWordLimits = (activeTab, textInput, wordLimit) => {
+	console.log("setwordlimits called")
+		const maxWordArea = activeTab.querySelector(".max-words")
+		let maxWords = 0
+		if (wordLimit.value){
+			maxWords = parseInt(wordLimit.value)
+			maxWordArea.textContent = `/${maxWords}`
+		}
+		else{
+			maxWordArea.textContent = ``
+		}
+		const numWords = countWords(textInput)
+		const wordCount = activeTab.querySelector(".word-count")
+
+		if(textInput.value){
+			checkMax(numWords, maxWords, wordCount)
+		}
+		else{
+			checkMax(numWords, 0, wordCount)
+		}
+		return maxWords
+	}
 
 
+const setCharLimits = (activeTab, textInput, charLimit) => {
+	console.log('setCharlimits called')
+	const maxCharAreas = activeTab.querySelectorAll(".max-chars")
+	let maxChars = parseInt(charLimit.value)
+	console.log('maxchars:', maxChars)
 
-const counter = (activeTab, textInput) => {
-	let maxChars = 0
-	let maxWords = 0
+	if(maxChars){
+		//console.log('charlimit val', charLimit.value)
+		//maxChars = parseInt(charLimit.value)
+		console.log("maxChars > 0")
+		textInput.setAttribute("maxlength", maxChars)
+		maxCharAreas.forEach((area) => {area.textContent = `/${maxChars}`})
+	}
+	else{
+		textInput.removeAttribute("maxlength")
+		maxCharAreas.forEach((area) => area.textContent = ``)
+	}
+	//charLimit.addEventListener("emptied", () => removeCharLimits(activeTab, textInput))
 
-	let numCharsSpace = 0
-	let numCharsNoSpace = 0
-
+	//if textinput has value, compare text length with given limits
+	const {numCharsSpace, numCharsNoSpace} = countChars(textInput)
+	console.log(`numCharsSpace: ${numCharsSpace} numCharsNoSpace: ${numCharsNoSpace}`)
 	const charCountSpace = activeTab.querySelector(".char-count-space")
 	const charCountNoSpace = activeTab.querySelector(".char-count-no-space")
 
-	const wordCount = activeTab.querySelector(".word-count")
+	charLimit.addEventListener("input", () => {
+		const {numCharsSpace, numCharsNoSpace} = countChars(textInput)
+		checkMax(numCharsSpace, maxChars, charCountSpace)
+		checkMax(numCharsNoSpace, maxChars, charCountNoSpace)}
+	)
 
-	const charLimit = activeTab.querySelector(".char-limit")
-
-	if (charLimit.value){
-
-		numChars = textInput.value.length
-		maxChars = parseInt(charLimit.value)
-		textInput.setAttribute("maxlength", maxChars)
-		if (activeTab.id == 'en'){
-		charCountSpace.textContent = numCharsSpace == 1 ? `${numCharsSpace}/${maxChars} Characters (including space)` : `${numCharsSpace}/${maxChars} (including space)`
-		charCountNoSpace.textContent = numCharsNoSpace == 1 ? `${numCharsNoSpace}/${maxChars} Characters (including space)` : `${numCharsNoSpace}/${maxChars} (including space)`
-		}
-		}
-		if (activeTab.id == 'ko'){
-			charCountSpace.textContent = `${numCharsSpace}/${maxChars} 자 (공백 포함)`
-			charCountNoSpace.textContent = `${numCharsNoSpace}/${maxChars} 자 (공백 포함)`
-		}
-
-	numCharsSpace = textInput.value.length
-	numCharsNoSpace = textInput.value.split("").filter((char) => char != " ").length;
-
-
-	if (activeTab.id == 'en'){
-		numWords = textInput.value.trim().split(/\s+/).filter(word => word.length > 0).length;
-
-		charCountSpace.textContent = `${numCharsSpace} Characters (space included)`
-		charCountNoSpace.textContent = `${numCharsNoSpace} Characters (except space)`
-		wordCount.textContent = `${numWords} Words`
-
-		const wordLimit = document.getElementById("word-limit")
-		if (wordLimit.value){
-			wordLimit.addEventListener("input", checkMax)
-			numWords = textInput.value.trim().split(/\s+/).filter(word => word.length > 0).length;
-			maxWords = parseInt(wordLimit.value)
-			wordCount.textContent = numWords == 1 ? `${numWords}/${maxWords} Word` : `${numWords}/${maxWords} Words`
-		}
-	}
-	if (activeTab.id == 'ko'){
-		charCountSpace.textContent = `${numCharsSpace} 자 (공백 포함)`
-		charCountNoSpace.textContent = `${numCharsNoSpace}  자 (공백 제외)`
-	}
-
+	textInput.addEventListener("input", () => {
+		const {numCharsSpace, numCharsNoSpace} = countChars(textInput)
 		checkMax(numCharsSpace, maxChars, charCountSpace)
 		checkMax(numCharsNoSpace, maxChars, charCountNoSpace)
-}
+	})
 
-
-
-const checkMax = (currentCount, maxCount, displayCount) => {
-	/*if (currentCount > maxCount){
-		textInput.value = textInput.value.slice(0, maxCount)
-	  } */
-	if (currentCount >= maxCount && maxCount > 0){
-		displayCount.classList.add("red")
-		}
-	else{
-		displayCount.classList.remove("red")
+	/*if (textInput.value && charLimit.value && maxChars > 0){
+		console.log("textInput.value && charLimit.value && maxChars > 0 hit")
+		checkMax(numCharsSpace, maxChars, charCountSpace)
+		checkMax(numCharsNoSpace, maxChars, charCountNoSpace)
 	}
-}
+	else{
+		//remove "red" class
+		checkMax(numCharsSpace, 0, charCountSpace)
+		checkMax(numCharsNoSpace, 0, charCountNoSpace)
+	} */
+
+	return  maxChars
+	}
+
+
+	const checkMax = (currentCount, maxCount, displayCount) => {
+		console.log("checkMax called")
+		if (currentCount >= maxCount && maxCount > 0){
+			displayCount.classList.add("red")
+			console.log("red added")
+			}
+		else{
+			displayCount.classList.remove("red")
+			console.log("red removed")
+		}
+		console.log(`current: ${currentCount} max: ${maxCount}`)
+	}
+
+
+	/*
+	const removeCharLimits = (activeTab, textInput) => {
+		console.log("removeCharLimits called")
+		const maxCharAreas = activeTab.querySelectorAll(".max-chars")
+		//remove maxlength restriction
+		textInput.removeAttribute("maxlength")
+		maxCharAreas.forEach((area) => area.textContent = ``)
+	} */
+	/*
+	merged with setWordLimits
+	const removeWordLimits = (activeTab) => {
+		const maxWordArea = activeTab.querySelector(".max-words")
+		//remove maxlength restriction
+		//textInput.removeAttribute("maxlength")
+		maxWordArea.textContent = ``
+	} */
+
+
+
 
 

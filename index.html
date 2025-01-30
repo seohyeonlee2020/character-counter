@@ -12,8 +12,8 @@
 <body>
 	<!-- Tab links -->
 	<div class="tab" id="navbar">
-	  <button id="default" class="tablinks" onclick="openTab(event, 'en')" >en</button>
-	  <button class="tablinks" onclick="openTab(event, 'ko')">ko</button>
+	  <button id="default" class="tablinks" onclick="openTab(event, 'en')" >English</button>
+	  <button class="tablinks" onclick="openTab(event, 'ko')">한국어</button>
 	</div>
 
 	<!-- Tab Content-->
@@ -36,9 +36,21 @@
 				<label for="text">Enter text:</label>
 				<textarea class="text-input en"></textarea>
 				<div class="vertical-container">
-					<p class="char-count-space en" >0 Characters including space</p>
-					<p class="char-count-no-space en" >0 Characters except space</p>
-					<p class="word-count en" >0 Words</p>
+					<div class="horizontal-container">
+						<p class="char-count-space en" >0</p>
+						<p class="max-chars en" ></p>
+						<p>Characters (including space)</p>
+					</div>
+					<div class="horizontal-container">
+						<p class="char-count-no-space en" >0</p>
+						<p class="max-chars en"></p>
+						<p>Characters (except space)</p>
+					</div>
+					<div class="horizontal-container">
+						<p class="word-count en" >0</p>
+						<p class="max-words en" ></p>
+						<p>Words</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -60,8 +72,17 @@
 			<div class="vertical-container">
 				<textarea class="text-input ko" placeholder="내용을 입력해주세요."></textarea>
 				<div class="vertical-container">
-					<p class="char-count-space ko" >0 자 (공백 포함)</p>
-					<p class="char-count-no-space ko" >0 자 (공백 제외)</p>
+					<div class="horizontal-container">
+						<p class="char-count-space ko" >0</p>
+						<p class="max-chars ko"></p>
+						<p>자 (공백 포함)</p>
+					</div>
+					<div class="horizontal-container">
+						<p class="char-count-no-space ko" >0</p>
+						<p class="max-chars ko"></p>
+						<p>자 (공백 제외)</p>
+					</div>
+
 				</div>
 			</div>
 		</div>
