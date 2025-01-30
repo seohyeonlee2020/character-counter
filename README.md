@@ -1,3 +1,3 @@
 # Character Counter
-
-Real-time character counter with bilingual support. 
+[demo video](./wordCounterGif.gif)
+<br>Real-time character counter with bilingual support. 
